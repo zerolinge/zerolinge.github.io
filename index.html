@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>高考祝福</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>综合页面</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/skystar.css">
     <script src="star.js" defer></script>
@@ -91,62 +91,30 @@
             font-family: '楷体';
         }
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-        }
-
-        .textone {
-            top: 20%;
-        }
-
-        .texttwo {
-            top: 30%;
-        }
-
-        .textthree {
-            top: 40%;
-        }
-
-        :root {
-            --animation-duration: 0s;
-            --animation-delay: 0s;
-        }
-
-        .word-box,
-        .word-box .word {
+        .container, .textone, .texttwo, .textthree {
             position: absolute;
-            transform-style: preserve-3d;
-            animation: rotY var(--animation-duration) linear infinite;
-            animation-delay: var(--animation-delay);
+            z-index: 1;
+            width: 100%;
             text-align: center;
         }
 
-        .word-box {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .textone {
+            top: 40%;
         }
 
-        @keyframes rotY {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
+        .texttwo {
+            top: 50%;
+        }
+
+        .textthree {
+            top: 60%;
         }
     </style>
 </head>
 
 <body>
-    <!-- 初始展示部分 -->
     <div id="intro-section">
+        <!-- 初始展示部分 -->
         <canvas id="canvas"></canvas>
         <div class="box">
             <div class="chars">2</div>
@@ -168,8 +136,8 @@
         <a href="javascript:void(0)" id="myButton">跳转</a>
     </div>
 
-    <!-- 跳转后展示部分 -->
     <div id="video-section">
+        <!-- 跳转后展示部分 -->
         <video id="videofilm" poster="img/skystar2.jpg" autoplay muted loop>
             <source src="scenery.mp4" type="video/mp4">
         </video>
@@ -183,52 +151,20 @@
             <h1></h1>
         </div>
         <audio id="audio" autoplay loop>
-            <source src="okay alone.mp3" type="audio/mp3">
+            <source src="okay_alone.mp3" type="audio/mp3">
         </audio>
         <div class="container"></div>
         <script src="js/skystar.js"></script>
+        <script>
+            var video = document.getElementById('videofilm');
+            var audio = document.getElementById('audio');
+            video.oncanplay = function() {
+                video.play();
+                audio.play();
+            }
+        </script>
     </div>
 
-<script>
-    // 设置按钮的透明度
-    setTimeout(() => {
-        const button = document.getElementById('myButton');
-        button.style.opacity = 1;
-    }, 3000);
-
-    // 创建 AudioContext
-    let audioContext = null;
-
-    // 按钮点击事件处理
-    document.getElementById('myButton').addEventListener('click', () => {
-        // 隐藏初始部分
-        document.getElementById('intro-section').style.display = 'none';
-        // 显示视频部分
-        document.getElementById('video-section').style.display = 'block';
-        
-        // 播放音频
-        const audio = document.getElementById('audio');
-
-        if (audioContext === null) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        }
-
-        const source = audioContext.createMediaElementSource(audio);
-        source.connect(audioContext.destination);
-
-        audio.play().catch(function (error) {
-            console.log('自动播放被阻止，等待用户交互');
-        });
-    });
-
-    // 添加事件监听器，在用户与页面进行交互时恢复 AudioContext
-    document.addEventListener('click', function resumeAudioContext() {
-        if (audioContext !== null && audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
-        document.removeEventListener('click', resumeAudioContext);
-    });
-</script>
 </body>
 
 </html>
