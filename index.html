@@ -32,9 +32,10 @@
             background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
             border-radius: 30px;
             background-size: 400%;
-            z-index: 1;
+            z-index: 2; /* 调高 z-index 确保显示在前面 */
             opacity: 0;
             text-decoration: none; /* 确保链接没有下划线 */
+            transition: opacity 1s; /* 平滑显示 */
         }
 
         a:hover {
@@ -162,9 +163,21 @@
                 video.play();
                 audio.play();
             }
+
+            // 3 秒钟后显示按钮
+            window.onload = function() {
+                setTimeout(function() {
+                    document.getElementById('myButton').style.opacity = 1;
+                }, 3000);
+            };
+
+            // 按钮点击事件处理
+            document.getElementById('myButton').addEventListener('click', function() {
+                document.getElementById('intro-section').style.display = 'none';
+                document.getElementById('video-section').style.display = 'block';
+            });
         </script>
     </div>
-
 </body>
 
 </html>
