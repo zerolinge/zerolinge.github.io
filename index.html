@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+    <title>纯CSS实现ANIPLEX特效</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="star.js" defer></script>
+    <style>
+        a {
+            position: absolute;
+            top: calc(50% + 100px); /* 将按钮下移 100px */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            color: #fff;
+            font-size: 24px;
+            box-sizing: border-box;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            border-radius: 30px;
+            background-size: 400%;
+            z-index: 1;
+            opacity: 0;
+            text-decoration: none; /* 确保链接没有下划线 */
+        }
+
+        a:hover {
+            animation: animate 8s linear infinite;
+        }
+
+        @keyframes animate {
+            from {
+                background-position: 0%;
+            }
+            to {
+                background-position: 400%;
+            }
+        }
+
+        a::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            z-index: -1;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 400%;
+            border-radius: 40px;
+            opacity: 1;
+        }
+
+        a:hover::before {
+            filter: blur(20px);
+            animation: animate 5s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="box">
+        <div class="chars">2</div>
+        <div class="chars">4</div>
+        <div class="chars">年</div>
+        <div class="chars">高</div>
+        <div class="chars">考</div>
+        <div class="chars">加</div>
+        <div class="chars">油</div>
+        <div class="ll a"></div>
+        <div class="ll n"></div>
+        <div class="ll i"></div>
+        <div class="ll p"></div>
+        <div class="ll l"></div>
+        <div class="ll e"></div>
+        <div class="ll x"></div>
+        <div class="pcov"></div>
+    </div>
+    <a href="skystar.html" id="myButton">跳转</a>
+
+    <script>
+        setTimeout(() => {
+            const button = document.getElementById('myButton');
+            button.style.opacity = 1;
+        }, 3000);
+    </script>
+</body>
+
+</html>
