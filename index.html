@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-    <title>纯CSS实现ANIPLEX特效</title>
-    <link rel="stylesheet" href="style.css">
+    <title>综合页面</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/skystar.css">
     <script src="star.js" defer></script>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* 防止滚动条出现 */
+        }
+
         a {
             position: absolute;
             top: calc(50% + 100px); /* 将按钮下移 100px */
@@ -57,35 +65,119 @@
             filter: blur(20px);
             animation: animate 5s linear infinite;
         }
+
+        /* 隐藏播放视图 */
+        #video-section {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #videofilm {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #B1BCE6;
+            font-family: '楷体';
+        }
+
+        .container, .textone, .texttwo, .textthree {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+        }
+
+        .textone {
+            top: 40%;
+        }
+
+        .texttwo {
+            top: 50%;
+        }
+
+        .textthree {
+            top: 60%;
+        }
     </style>
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
-    <div class="box">
-        <div class="chars">2</div>
-        <div class="chars">4</div>
-        <div class="chars">年</div>
-        <div class="chars">高</div>
-        <div class="chars">考</div>
-        <div class="chars">加</div>
-        <div class="chars">油</div>
-        <div class="ll a"></div>
-        <div class="ll n"></div>
-        <div class="ll i"></div>
-        <div class="ll p"></div>
-        <div class="ll l"></div>
-        <div class="ll e"></div>
-        <div class="ll x"></div>
-        <div class="pcov"></div>
+    <!-- 初始展示部分 -->
+    <div id="intro-section">
+        <canvas id="canvas"></canvas>
+        <div class="box">
+            <div class="chars">2</div>
+            <div class="chars">4</div>
+            <div class="chars">年</div>
+            <div class="chars">高</div>
+            <div class="chars">考</div>
+            <div class="chars">加</div>
+            <div class="chars">油</div>
+            <div class="ll a"></div>
+            <div class="ll n"></div>
+            <div class="ll i"></div>
+            <div class="ll p"></div>
+            <div class="ll l"></div>
+            <div class="ll e"></div>
+            <div class="ll x"></div>
+            <div class="pcov"></div>
+        </div>
+        <a href="javascript:void(0)" id="myButton">跳转</a>
     </div>
-    <a href="skystar.html" id="myButton">跳转</a>
+
+    <!-- 跳转后展示部分 -->
+    <div id="video-section">
+        <video id="videofilm" poster="img/skystar2.jpg" autoplay muted loop>
+            <source src="scenery.mp4" type="video/mp4">
+        </video>
+        <div class="textone">
+            <h1>look at the stars</h1>
+        </div>
+        <div class="texttwo">
+            <h1>look how they shine for you</h1>
+        </div>
+        <div class="textthree">
+            <h1></h1>
+        </div>
+        <audio id="audio" autoplay loop>
+            <source src="okay alone.mp3" type="audio/mp3">
+        </audio>
+        <div class="container"></div>
+        <script src="js/skystar.js"></script>
+    </div>
 
     <script>
+        // 设置按钮的透明度
         setTimeout(() => {
             const button = document.getElementById('myButton');
             button.style.opacity = 1;
         }, 3000);
+
+        // 按钮点击事件处理
+        document.getElementById('myButton').addEventListener('click', () => {
+            // 隐藏初始部分
+            document.getElementById('intro-section').style.display = 'none';
+            // 显示视频部分
+            document.getElementById('video-section').style.display = 'block';
+            // 确保音频播放
+            const audio = document.getElementById('audio');
+            audio.play().catch(function (error) {
+                document.body.addEventListener('click', function () {
+                    audio.play();
+                }, { once: true });  // This ensures the event listener is used only once.
+            });
+        });
     </script>
 </body>
 
