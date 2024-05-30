@@ -196,6 +196,9 @@
         button.style.opacity = 1;
     }, 3000);
 
+    // 创建 AudioContext
+    let audioContext = null;
+
     // 按钮点击事件处理
     document.getElementById('myButton').addEventListener('click', () => {
         // 隐藏初始部分
@@ -205,12 +208,25 @@
         
         // 播放音频
         const audio = document.getElementById('audio');
+
+        if (audioContext === null) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        const source = audioContext.createMediaElementSource(audio);
+        source.connect(audioContext.destination);
+
         audio.play().catch(function (error) {
-            // 如果自动播放被阻止，添加一个事件监听器，在用户与页面进行交互时开始播放音频
-            document.body.addEventListener('click', function () {
-                audio.play();
-            }, { once: true });  // 确保事件监听器只使用一次
+            console.log('自动播放被阻止，等待用户交互');
         });
+    });
+
+    // 添加事件监听器，在用户与页面进行交互时恢复 AudioContext
+    document.addEventListener('click', function resumeAudioContext() {
+        if (audioContext !== null && audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+        document.removeEventListener('click', resumeAudioContext);
     });
 </script>
 </body>
