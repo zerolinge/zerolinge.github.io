@@ -108,19 +108,19 @@
         }
 
         .textone {
-            top: 40%;
+            top: 20%;
             color: #E8F9FD;
             font-family: '楷体';
         }
 
         .texttwo {
-            top: 50%;
+            top: 30%;
             color: #E8F9FD;
             font-family: '楷体';
         }
 
         .textthree {
-            top: 60%;
+            top: 40%;
             color: #E8F9FD;
             font-family: '楷体';
         }
@@ -201,28 +201,30 @@
         <script src="js/skystar.js"></script>
     </div>
 
-    <script>
-        // 设置按钮的透明度
-        setTimeout(() => {
-            const button = document.getElementById('myButton');
-            button.style.opacity = 1;
-        }, 3000);
+<script>
+    // 设置按钮的透明度
+    setTimeout(() => {
+        const button = document.getElementById('myButton');
+        button.style.opacity = 1;
+    }, 3000);
 
-        // 按钮点击事件处理
-        document.getElementById('myButton').addEventListener('click', () => {
-            // 隐藏初始部分
-            document.getElementById('intro-section').style.display = 'none';
-            // 显示视频部分
-            document.getElementById('video-section').style.display = 'block';
-            // 确保音频播放
-            const audio = document.getElementById('audio');
-            audio.play().catch(function (error) {
-                document.body.addEventListener('click', function () {
-                    audio.play();
-                }, { once: true });  // This ensures the event listener is used only once.
-            });
+    // 按钮点击事件处理
+    document.getElementById('myButton').addEventListener('click', () => {
+        // 隐藏初始部分
+        document.getElementById('intro-section').style.display = 'none';
+        // 显示视频部分
+        document.getElementById('video-section').style.display = 'block';
+        
+        // 播放音频
+        const audio = document.getElementById('audio');
+        audio.play().catch(function (error) {
+            // 如果自动播放被阻止，添加一个事件监听器，在用户与页面进行交互时开始播放音频
+            document.body.addEventListener('click', function () {
+                audio.play();
+            }, { once: true });  // 确保事件监听器只使用一次
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>
